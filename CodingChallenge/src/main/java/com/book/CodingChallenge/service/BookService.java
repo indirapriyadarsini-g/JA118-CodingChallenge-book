@@ -25,7 +25,7 @@ public class BookService {
 		return bookRepository.save(b);
 	}
 
-	public Book getBookByIsbn(int isbn) {
+	public Book getBookByIsbn(String isbn) {
 		// TODO Auto-generated method stub
 		return bookRepository.getBookByIsbn(isbn);
 	}

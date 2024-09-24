@@ -11,7 +11,7 @@ import jakarta.transaction.Transactional;
 public interface BookRepository extends JpaRepository<Book,Integer>{
 
 	@Query("select b from Book b where b.isbn = ?1")
-	Book getBookByIsbn(int isbn);
+	Book getBookByIsbn(String isbn);
 
 	@Transactional
 	@Modifying

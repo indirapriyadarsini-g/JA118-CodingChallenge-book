@@ -137,7 +137,7 @@ public class BookController {
     }
     
     @GetMapping("retrieve-single-book-by-ISBN/{isbn}")
-    public ResponseEntity<?> addNewBook(@PathVariable int isbn,MessageDto dto){
+    public ResponseEntity<?> addNewBook(@PathVariable String isbn,MessageDto dto){
     	try {
     		Book book = bookService.getBookByIsbn(isbn);
     		return ResponseEntity.ok(book);
