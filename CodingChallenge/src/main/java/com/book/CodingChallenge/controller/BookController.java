@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ import com.book.CodingChallenge.dto.MessageDto;
 import com.book.CodingChallenge.entity.Admin;
 import com.book.CodingChallenge.entity.Book;
 import com.book.CodingChallenge.entity.UserInfo;
-import com.book.CodingChallenge.enums.RoleType;
+
 import com.book.CodingChallenge.exception.InvalidCredentialsException;
 import com.book.CodingChallenge.repository.AdminRepository;
 import com.book.CodingChallenge.repository.UserInfoRepository;
@@ -62,7 +63,7 @@ public class BookController {
 			
 			
 			
-			userInfo.setRole(RoleType.USER);
+			userInfo.setRole("USER");
 	    	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
 	    	
 	    	UserInfo user = userRepository.save(userInfo);
@@ -82,7 +83,7 @@ public class BookController {
 			    if (userInfo != null && userInfo.getId() == 0) {
 			    	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
 			        userInfo = userRepository.save(userInfo); 
-			        admin.getUserInfo().setRole(RoleType.ADMIN);
+			        admin.getUserInfo().setRole("ADMIN");
 			        admin.setUserInfo(userInfo);
 			    }
 
@@ -160,17 +161,17 @@ public class BookController {
     	}
     }
     
-//    @PostMapping("/add-new-book")
-//    public ResponseEntity<?> addNewBook(@RequestBody Principal principal,MessageDto dto){
-//    	try {
-//    		
-//    		return ResponseEntity.ok(null);
-//    	}
-//    	catch(Exception e) {
-//    		dto.setMsg(e.getMessage());
-//    		return ResponseEntity.badRequest().body(dto);
-//    	}
-//    }
+    @DeleteMapping("/delete-book-by-ISBN/{isbn}")
+    public ResponseEntity<?> deleteBookByIsbn(@PathVariable String isbn, Principal principal,MessageDto dto){
+    	try {
+    		int n = bookService.deleteBookByIsbn(isbn);
+    		return ResponseEntity.ok(""+n +" book deleted");
+    	}
+    	catch(Exception e) {
+    		dto.setMsg(e.getMessage());
+    		return ResponseEntity.badRequest().body(dto);
+    	}
+    }
 //    
 //    @PostMapping("/add-new-book")
 //    public ResponseEntity<?> addNewBook(@RequestBody Principal principal,MessageDto dto){

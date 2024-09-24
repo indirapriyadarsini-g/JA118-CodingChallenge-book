@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.book.CodingChallenge.enums.RoleType;
+
 
 
 import jakarta.persistence.Entity;
@@ -39,14 +39,14 @@ public class UserInfo implements UserDetails{
 	
 	private String password;
 	
-	@Enumerated(EnumType.STRING)
-	private RoleType role;
 	
-	public RoleType getRole() {
+	private String role;
+	
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(RoleType role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 
@@ -115,7 +115,7 @@ public class UserInfo implements UserDetails{
 		return true;
 	}
 
-	public UserInfo(int id, String username, String password, RoleType role, boolean isEnabled) {
+	public UserInfo(int id, String username, String password, String role, boolean isEnabled) {
 		super();
 		this.id = id;
 		this.username = username;

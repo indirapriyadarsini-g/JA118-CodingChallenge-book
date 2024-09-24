@@ -37,4 +37,10 @@ public class BookService {
 		return bookRepository.findById(pId);
 	}
 
+	public int deleteBookByIsbn(String isbn) {
+		// TODO Auto-generated method stub
+		
+		return bookRepository.deleteByIsbn(isbn);
+	}
+
 }
