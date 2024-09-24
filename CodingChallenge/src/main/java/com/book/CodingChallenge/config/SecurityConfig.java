@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.book.CodingChallenge.enums.Role;
+import com.book.CodingChallenge.enums.RoleType;
 import com.book.CodingChallenge.service.MyUserDetailsService;
 
 
@@ -35,11 +35,11 @@ public class SecurityConfig {
             		   .requestMatchers("/auth/token").permitAll() 
             		   .requestMatchers("/error").permitAll()
             		   .requestMatchers("/auth/signup").permitAll()  
-            		   .requestMatchers("/retrieve-all").hasAnyRole(Role.USER.toString(),Role.ADMIN.toString())
-            		   .requestMatchers("/retrieve-single-book-by-ISBN/{isbn}").hasAnyRole(Role.USER.toString(),Role.ADMIN.toString())
-            		   .requestMatchers("/add-new-book").hasRole(Role.ADMIN.toString())
-            		   .requestMatchers("/update-existing-book").hasRole(Role.ADMIN.toString())
-            		   .requestMatchers("/delete-book-by-ISBN/{isbn}").hasRole(Role.ADMIN.toString())
+            		   .requestMatchers("/retrieve-all").permitAll()
+            		   .requestMatchers("/retrieve-single-book-by-ISBN/{isbn}").hasAnyRole(RoleType.USER.toString(),RoleType.ADMIN.toString())
+            		   .requestMatchers("/add-new-book").hasRole(RoleType.ADMIN.toString())
+            		   .requestMatchers("/update-existing-book").hasRole(RoleType.ADMIN.toString())
+            		   .requestMatchers("/delete-book-by-ISBN/{isbn}").hasRole(RoleType.ADMIN.toString())
                    
                )
                .sessionManagement(session -> session

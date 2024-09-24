@@ -6,16 +6,14 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.book.CodingChallenge.repository.UserInfoRepository;
-import com.book.CodingChallenge.service.UserService;
+
 
 @SpringBootTest
 class CodingChallengeApplicationTests {
 
 	@Mock
 	UserInfoRepository userInfoRepository;
-	
-	@InjectMocks
-	UserService userService;
+
 	
 	
 	

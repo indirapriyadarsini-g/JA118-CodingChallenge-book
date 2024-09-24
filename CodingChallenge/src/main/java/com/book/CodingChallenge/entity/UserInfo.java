@@ -8,10 +8,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.book.CodingChallenge.enums.Role;
+import com.book.CodingChallenge.enums.RoleType;
 
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,22 +26,27 @@ public class UserInfo implements UserDetails{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(unique = true)
+//	@Column(unique = true)
 	private String username;
 	
 	private String password;
 	
-	private Role role;
+	@Enumerated(EnumType.STRING)
+	private RoleType role;
 	
-	public Role getRole() {
+	public RoleType getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(RoleType role) {
 		this.role = role;
 	}
 
@@ -108,12 +115,25 @@ public class UserInfo implements UserDetails{
 		return true;
 	}
 
-	public UserInfo(int id, String username, String password, Role role, boolean isEnabled) {
+	public UserInfo(int id, String username, String password, RoleType role, boolean isEnabled) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.role = role;
 		this.isEnabled = isEnabled;
+	}
+
+	public UserInfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public UserInfo(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+//		this.role = RoleType.USER;
+//		this.isEnabled = true;
 	}
 }
