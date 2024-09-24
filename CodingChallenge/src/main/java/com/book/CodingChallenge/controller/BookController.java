@@ -63,7 +63,7 @@ public class BookController {
 			
 			
 			
-			userInfo.setRole("USER");
+			userInfo.setRole("ROLE_USER");
 	    	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
 	    	
 	    	UserInfo user = userRepository.save(userInfo);
@@ -80,10 +80,10 @@ public class BookController {
 		try{
 			
 			 UserInfo userInfo = admin.getUserInfo();
-			    if (userInfo != null && userInfo.getId() == 0) {
+			    if (userInfo != null ) {
 			    	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
 			        userInfo = userRepository.save(userInfo); 
-			        admin.getUserInfo().setRole("ADMIN");
+			        admin.getUserInfo().setRole("ROLE_ADMIN");
 			        admin.setUserInfo(userInfo);
 			    }
 
@@ -164,8 +164,8 @@ public class BookController {
     @DeleteMapping("/delete-book-by-ISBN/{isbn}")
     public ResponseEntity<?> deleteBookByIsbn(@PathVariable String isbn, Principal principal,MessageDto dto){
     	try {
-    		int n = bookService.deleteBookByIsbn(isbn);
-    		return ResponseEntity.ok(""+n +" book deleted");
+    		bookService.deleteBookByIsbn(isbn);
+    		return ResponseEntity.ok("Deleted");
     	}
     	catch(Exception e) {
     		dto.setMsg(e.getMessage());

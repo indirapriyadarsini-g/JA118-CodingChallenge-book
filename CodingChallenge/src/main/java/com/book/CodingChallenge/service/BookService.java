@@ -37,10 +37,11 @@ public class BookService {
 		return bookRepository.findById(pId);
 	}
 
-	public int deleteBookByIsbn(String isbn) {
+	public void deleteBookByIsbn(String isbn) {
 		// TODO Auto-generated method stub
-		
-		return bookRepository.deleteByIsbn(isbn);
+		Book book = bookRepository.getBookByIsbn(isbn);
+		bookRepository.delete(book);
+//		return bookRepository.deleteByIsbn(isbn);
 	}
 
 }
