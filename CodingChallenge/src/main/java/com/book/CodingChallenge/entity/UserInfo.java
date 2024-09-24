@@ -107,4 +107,13 @@ public class UserInfo implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	public UserInfo(int id, String username, String password, Role role, boolean isEnabled) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.isEnabled = isEnabled;
+	}
 }

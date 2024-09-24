@@ -36,10 +36,10 @@ public class SecurityConfig {
             		   .requestMatchers("/error").permitAll()
             		   .requestMatchers("/auth/signup").permitAll()  
             		   .requestMatchers("/retrieve-all").hasAnyRole(Role.USER.toString(),Role.ADMIN.toString())
-            		   .requestMatchers("/retrieve-single-book-by-ISBN").hasAnyRole(Role.USER.toString(),Role.ADMIN.toString())
+            		   .requestMatchers("/retrieve-single-book-by-ISBN/{isbn}").hasAnyRole(Role.USER.toString(),Role.ADMIN.toString())
             		   .requestMatchers("/add-new-book").hasRole(Role.ADMIN.toString())
             		   .requestMatchers("/update-existing-book").hasRole(Role.ADMIN.toString())
-            		   .requestMatchers("/delete-book-by-ISBN").hasRole(Role.ADMIN.toString())
+            		   .requestMatchers("/delete-book-by-ISBN/{isbn}").hasRole(Role.ADMIN.toString())
                    
                )
                .sessionManagement(session -> session
