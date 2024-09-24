@@ -34,10 +34,12 @@ public class SecurityConfig {
                .authorizeHttpRequests(auth -> auth
             		   .requestMatchers("/auth/token").permitAll() 
             		   .requestMatchers("/error").permitAll()
-            		   .requestMatchers("/auth/signup").permitAll()  
+            		   .requestMatchers("/auth/signup").permitAll() 
+            		   .requestMatchers("/auth/admin").permitAll() 
             		   .requestMatchers("/retrieve-all").permitAll()
+            		   .requestMatchers("/add-new-book").permitAll()
             		   .requestMatchers("/retrieve-single-book-by-ISBN/{isbn}").hasAnyRole(RoleType.USER.toString(),RoleType.ADMIN.toString())
-            		   .requestMatchers("/add-new-book").hasRole(RoleType.ADMIN.toString())
+            		   
             		   .requestMatchers("/update-existing-book").hasRole(RoleType.ADMIN.toString())
             		   .requestMatchers("/delete-book-by-ISBN/{isbn}").hasRole(RoleType.ADMIN.toString())
                    

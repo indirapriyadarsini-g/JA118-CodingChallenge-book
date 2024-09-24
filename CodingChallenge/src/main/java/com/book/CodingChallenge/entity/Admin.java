@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Admin {
@@ -13,6 +14,9 @@ public class Admin {
 	private int id;
 	
 	private String adminName;
+	
+	@OneToOne
+	private UserInfo userInfo;
 
 	public int getId() {
 		return id;
@@ -44,6 +48,14 @@ public class Admin {
 	public Admin() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
 	
 	

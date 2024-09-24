@@ -1,8 +1,8 @@
 package com.book.CodingChallenge.controller;
 
-import java.security.Principal;
+
+
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.book.CodingChallenge.config.JwtUtil;
 import com.book.CodingChallenge.dto.MessageDto;
+import com.book.CodingChallenge.entity.Admin;
 import com.book.CodingChallenge.entity.Book;
 import com.book.CodingChallenge.entity.UserInfo;
 import com.book.CodingChallenge.enums.RoleType;
+import com.book.CodingChallenge.exception.InvalidCredentialsException;
+import com.book.CodingChallenge.repository.AdminRepository;
 import com.book.CodingChallenge.repository.UserInfoRepository;
 import com.book.CodingChallenge.service.BookService;
 import com.book.CodingChallenge.service.MyUserDetailsService;
@@ -43,12 +46,18 @@ public class BookController {
 	 @Autowired
 		private UserInfoRepository userRepository;
 		
-		@Autowired
-		private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+		
+	@Autowired
+	private AdminRepository adminRepository;
 
 	@PostMapping("/auth/signup")
 	public ResponseEntity<?> signup(@RequestBody UserInfo userInfo,MessageDto dto){
 		try{
+			
+			
+			
 			userInfo.setRole(RoleType.USER);
 	    	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
 	    	
@@ -61,6 +70,28 @@ public class BookController {
 		}
 	}
    
+	@PostMapping("/auth/admin")
+	public ResponseEntity<?> adminLogin(@RequestBody Admin admin,MessageDto dto){
+		try{
+			
+			 UserInfo userInfo = admin.getUserInfo();
+			    if (userInfo != null && userInfo.getId() == 0) {
+			    	userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+			        userInfo = userRepository.save(userInfo); 
+			        admin.getUserInfo().setRole(RoleType.ADMIN);
+			        admin.setUserInfo(userInfo);
+			    }
+
+	    	Admin ad = adminRepository.save(admin);
+			return ResponseEntity.ok(ad);
+		}
+		catch(Exception e) {
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
+		}
+	}
+	
+	
     @PostMapping("/auth/token")
     public String createAuthenticationToken(@RequestBody UserInfo authenticationRequest) throws Exception {
  
@@ -90,9 +121,9 @@ public class BookController {
     @PostMapping("/add-new-book")
     public ResponseEntity<?> addNewBook(@RequestBody Book b,MessageDto dto){
     	try {
-    		Optional<Book> book = bookService.addBook(b);
-    		if(book.isEmpty())	throw new Exception("Book not added");
-    		return ResponseEntity.ok(null);
+    		Book book = bookService.addBook(b);
+    		if(book==null)	throw new InvalidCredentialsException("Book not added");
+    		return ResponseEntity.ok(book);
     	}
     	catch(Exception e) {
     		dto.setMsg(e.getMessage());
