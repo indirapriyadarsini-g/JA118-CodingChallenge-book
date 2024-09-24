@@ -1,6 +1,7 @@
 package com.book.CodingChallenge.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,13 @@ public class BookService {
 	public Book getBookByIsbn(int isbn) {
 		// TODO Auto-generated method stub
 		return bookRepository.getBookByIsbn(isbn);
+	}
+
+	public Optional<Book> updateBook(int pId,String title) {
+		// TODO Auto-generated method stub
+		int n = bookRepository.updateBook(pId,title);
+		if(n<1)	return null;
+		return bookRepository.findById(pId);
 	}
 
 }

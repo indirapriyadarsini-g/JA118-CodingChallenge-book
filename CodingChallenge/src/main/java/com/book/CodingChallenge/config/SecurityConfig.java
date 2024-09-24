@@ -39,7 +39,7 @@ public class SecurityConfig {
             		   .requestMatchers("/retrieve-all").permitAll()
             		   .requestMatchers("/add-new-book").permitAll()
             		   .requestMatchers("/retrieve-single-book-by-ISBN/{isbn}").permitAll()
-            		   .requestMatchers("/update-existing-book").hasRole(RoleType.ADMIN.toString())
+            		   .requestMatchers("/update-existing-book/{bId}").hasRole(RoleType.ADMIN.toString())
             		   .requestMatchers("/delete-book-by-ISBN/{isbn}").hasRole(RoleType.ADMIN.toString())
                    
                )
