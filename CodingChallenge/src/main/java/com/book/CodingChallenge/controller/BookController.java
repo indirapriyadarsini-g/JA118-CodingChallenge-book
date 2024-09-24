@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -131,17 +132,17 @@ public class BookController {
     	}
     }
     
-//    @PostMapping("/add-new-book")
-//    public ResponseEntity<?> addNewBook(@RequestBody Principal principal,MessageDto dto){
-//    	try {
-//    		
-//    		return ResponseEntity.ok(null);
-//    	}
-//    	catch(Exception e) {
-//    		dto.setMsg(e.getMessage());
-//    		return ResponseEntity.badRequest().body(dto);
-//    	}
-//    }
+    @GetMapping("retrieve-single-book-by-ISBN/{isbn}")
+    public ResponseEntity<?> addNewBook(@PathVariable int isbn,MessageDto dto){
+    	try {
+    		Book book = bookService.getBookByIsbn(isbn);
+    		return ResponseEntity.ok(book);
+    	}
+    	catch(Exception e) {
+    		dto.setMsg(e.getMessage());
+    		return ResponseEntity.badRequest().body(dto);
+    	}
+    }
 //    
 //    @PostMapping("/add-new-book")
 //    public ResponseEntity<?> addNewBook(@RequestBody Principal principal,MessageDto dto){

@@ -24,4 +24,9 @@ public class BookService {
 		return bookRepository.save(b);
 	}
 
+	public Book getBookByIsbn(int isbn) {
+		// TODO Auto-generated method stub
+		return bookRepository.getBookByIsbn(isbn);
+	}
+
 }
